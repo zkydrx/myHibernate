@@ -7,13 +7,13 @@
           <element id="module-output" name="quartz" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz:2.2.1" />
-          <element id="library" level="project" name="Maven: c3p0:c3p0:0.9.1.1" />
-          <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz-jobs:2.2.1" />
+          <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz:2.3.0" />
+          <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.5.2" />
+          <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.11" />
+          <element id="library" level="project" name="Maven: com.zaxxer:HikariCP-java6:2.3.13" />
+          <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz-jobs:2.3.0" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.5" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.5" />
-          <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.0.13" />
-          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.0.13" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.31" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.1.36" />
           <element id="library" level="project" name="Maven: org.apache.maven.plugins:maven-resources-plugin:2.6" />
