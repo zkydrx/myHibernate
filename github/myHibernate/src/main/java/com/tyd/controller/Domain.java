@@ -6,7 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -112,31 +114,97 @@ public class Domain
 
         }
         transaction.commit();
-        //        session.close();
+        session.close();
     }
 
-//    @Test
-//    public void testAddToTable()
-//    {
-//        HibernateEntity hibernateEntity = new HibernateEntity();
-//        hibernateEntity.setName("a");
-//        hibernateEntity.setAge("25");
-//        HibernateEntity hibernateEntity1 = new HibernateEntity();
-//        hibernateEntity1.setName("b");
-//        hibernateEntity1.setAge("25");
-//        HibernateEntity hibernateEntity2 = new HibernateEntity();
-//        hibernateEntity2.setName("3");
-//        hibernateEntity2.setAge("25");
-//        List<HibernateEntity> list = new ArrayList<>();
-//        list.add(hibernateEntity);
-//        list.add(hibernateEntity1);
-//        list.add(hibernateEntity2);
-////        addToTable(list);
-//        Session session = SessionUtil.getSession();
-//        Transaction transaction = session.beginTransaction();
-//        session.save(hibernateEntity);
-//        transaction.commit();
-//        session.close();
-//
-//    }
+
+
+
+    @Test
+    public void testAddToTable()
+    {
+        HibernateEntity hibernateEntity = new HibernateEntity();
+        hibernateEntity.setName("a");
+        hibernateEntity.setAge("25");
+        HibernateEntity hibernateEntity1 = new HibernateEntity();
+        hibernateEntity1.setName("b");
+        hibernateEntity1.setAge("25");
+        HibernateEntity hibernateEntity2 = new HibernateEntity();
+        hibernateEntity2.setName("3");
+        hibernateEntity2.setAge("25");
+        List<HibernateEntity> list = new ArrayList<>();
+        list.add(hibernateEntity);
+        list.add(hibernateEntity1);
+        list.add(hibernateEntity2);
+        addToTable(list);
+
+    }
+
+
+    /**
+     * 根据id删除一条数据
+     * @param id
+     */
+    public static void deleteObject(Integer id)
+    {
+        Session session = SessionUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        HibernateEntity hibernateEntity = new HibernateEntity();
+        hibernateEntity.setId(id);
+        session.delete(hibernateEntity);
+        session.flush();
+        session.clear();
+        transaction.commit();
+        session.close();
+    }
+
+    @Test
+    public void testDeleteObject()
+    {
+        deleteObject(1);
+    }
+
+    public static void updateObject(HibernateEntity hibernateEntity)
+    {
+        Session session = SessionUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(hibernateEntity);
+        session.flush();
+        session.clear();
+        transaction.commit();
+        session.close();
+    }
+
+    @Test
+    public void testUpdateObject()
+    {
+        HibernateEntity hibernateEntity = new HibernateEntity();
+        hibernateEntity.setId(2);
+        hibernateEntity.setAge("10000");
+        hibernateEntity.setName("zky");
+        updateObject(hibernateEntity);
+    }
+
+    public static HibernateEntity findObjectByName(String name)
+    {
+        HibernateEntity hibernateEntity = new HibernateEntity();
+        hibernateEntity.setName(name);
+        Session session = SessionUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        HibernateEntity hibernateEntity1 = session.find(HibernateEntity.class,hibernateEntity);
+        List<HibernateEntity> list = new ArrayList<>();
+        list.add(hibernateEntity1);
+        session.flush();
+        session.clear();
+        transaction.commit();
+        session.close();
+        return hibernateEntity1;
+    }
+
+    @Test
+    public void testFindObjectByName()
+    {
+        HibernateEntity zky = findObjectByName("zky");
+        System.out.println(zky);
+    }
 }

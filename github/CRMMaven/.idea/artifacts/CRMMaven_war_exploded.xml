@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="CRMMaven:war exploded">
+    <output-path>$PROJECT_DIR$/target/CRMMaven</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="CRMMaven" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/CRMMaven/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="CRMMaven/web/Web" />
+    </root>
+  </artifact>
+</component>
