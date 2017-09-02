@@ -83,9 +83,33 @@ public class Domain
          */
         Transaction transaction = session.beginTransaction();
 //        hibernateEntity.forEach(hibernateEntity1->session.save(hibernateEntity1));
-        for(int i = 0; i < list.size(); i++)
+        for(int i = 0; i <= 1000; i++)
         {
-            session.save(list.get(i));
+            session.save(list.get(0));
+
+            /**
+             * 这两句至关重要，第一句session.flush()刷新缓存，第二句
+             * session.clear()是清空session为下一次进行操作准备，如果没有这句将会报异常
+             *
+             * Exception in thread "main" org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : [com.tyd.pojo.HibernateEntity#0]
+             at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:169)
+             at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:125)
+             at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:192)
+             at org.hibernate.event.internal.DefaultSaveEventListener.saveWithGeneratedOrRequestedId(DefaultSaveEventListener.java:38)
+             at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:177)
+             at org.hibernate.event.internal.DefaultSaveEventListener.performSaveOrUpdate(DefaultSaveEventListener.java:32)
+             at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:73)
+             at org.hibernate.internal.SessionImpl.fireSave(SessionImpl.java:689)
+             at org.hibernate.internal.SessionImpl.save(SessionImpl.java:681)
+             at org.hibernate.internal.SessionImpl.save(SessionImpl.java:676)
+
+             意思是说，一个不同的对象具有相同的标识符的已经存在于session中，所以没办法对新的元素进行操作这里是保存操作。
+             所以这时我们就要对session的缓存进行更新，并且清空session以用来对新的元素进行绑定操作。
+             */
+            session.flush();
+            session.clear();
+
+
         }
         transaction.commit();
         //        session.close();
