@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!-- 指定连接数据库的url,其中hibernate是本应用连接的数据库名 -->
+    <property name="connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+    <!-- 指定连接数据库的驱动 -->
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <!-- 指定连接数据库的用户名 -->
+    <property name="hibernate.connection.username">root</property>
+    <!-- 指定连接数据库的密码 -->
+    <property name="hibernate.connection.password">root</property>
+    <!-- 配置连接池信息 -->
+
+    <!-- 制定了连接池里最大的连接数 -->
+    <property name="hibernate.c3p0.max_size">30</property>
+    <!-- 指定连接池里最小的连接数 -->
+    <property name="hibernate.c3p0.min_size">1</property>
+    <!-- 指定数据库连接的超市时长 -->
+    <property name="hibernate.c3p0.timeout">5000</property>
+
+    <!-- 指定连接池里最大缓存多少个statement对象 -->
+    <property name="hibernate.c3p0.max_statements">100</property>
+    <property name="hibernate.c3p0.idle_test_period">3000</property>
+    <property name="hibernate.c3p0.acquire_increment">2</property>
+
+    <!-- 指定数据库方言 -->
+    <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+    <!-- 根据需要自动创建数据库表 -->
+    <property name="hbm2ddl.auto">update</property>
+
+    <!-- 显示Hibernate 持久化操作所生成的SQL -->
+    <property name="hibernate.show_sql">true</property>
+
+    <!-- 将SQL脚本进行格式化后再输出 -->
+    <property name="hibernate.format_sql">true</property>
+
+    <!-- 罗列所有持久化类的类名 -->
+    <!-- 指定Hibernate持久化类的类名 -->
+    <mapping class="com.tyd.pojo.HibernateEntity"/>
+
+  </session-factory>
+</hibernate-configuration>
