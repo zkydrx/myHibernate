@@ -44,6 +44,9 @@ public class Domain
         userService.deleteObj(1);
     }
 
+    /**
+     * 测试更新
+     */
     @Test
     public void  testUpdate()
     {
@@ -53,6 +56,9 @@ public class Domain
         userService.updateObj(userEntity);
     }
 
+    /**
+     * 测试全查
+     */
     @Test
     public void testFindAll()
     {
@@ -60,6 +66,9 @@ public class Domain
         System.out.println(all);
     }
 
+    /**
+     * 测试通过姓名查找
+     */
     @Test
     public void testFindByName()
     {
@@ -67,6 +76,9 @@ public class Domain
         System.out.println(b);
     }
 
+    /**
+     * 测试通过地址查找
+     */
     @Test
     public void testFindByAddress()
     {
@@ -74,6 +86,9 @@ public class Domain
         System.out.println(z);
     }
 
+    /**
+     * 测试通过年龄查找
+     */
     @Test
     public void testFindByAge()
     {
@@ -81,6 +96,9 @@ public class Domain
         System.out.println(byAge);
     }
 
+    /**
+     * 测试通过id查找。
+     */
     @Test
     public void testFindById()
     {
