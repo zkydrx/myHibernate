@@ -33,7 +33,11 @@
       <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <key id="19" parent="15" name="PRIMARY">
+    <column id="19" parent="15" name="password">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="20" parent="15" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

@@ -1,5 +1,7 @@
 package com.tyd.controller;
 
+import com.tyd.Utils.FactoryUtil;
+import com.tyd.Utils.MD5Util;
 import com.tyd.Utils.SessionUtil;
 import com.tyd.pojo.HibernateEntity;
 import org.hibernate.Session;
@@ -8,6 +10,8 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,26 +189,184 @@ public class Domain
         updateObject(hibernateEntity);
     }
 
-    public static HibernateEntity findObjectByName(String name)
+    /**
+     * 按名字查找用户信息
+     * @param name
+     * @return
+     */
+    public static List<HibernateEntity> findObjectByName(String name)
     {
         HibernateEntity hibernateEntity = new HibernateEntity();
         hibernateEntity.setName(name);
-        Session session = SessionUtil.getSession();
-        Transaction transaction = session.beginTransaction();
-        HibernateEntity hibernateEntity1 = session.find(HibernateEntity.class,hibernateEntity);
-        List<HibernateEntity> list = new ArrayList<>();
-        list.add(hibernateEntity1);
-        session.flush();
-        session.clear();
-        transaction.commit();
-        session.close();
-        return hibernateEntity1;
+        SessionFactory sessionFactory = FactoryUtil.getSessionFactory();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        /**
+         * entity管理开启事务
+         */
+        entityManager.getTransaction().begin();
+
+        Query query = entityManager.createQuery("from HibernateEntity h where h.name=:name");
+        query.setParameter("name","zky");
+        List resultList = query.getResultList();
+        entityManager.getTransaction().commit();
+        sessionFactory.close();
+        System.out.println(resultList);
+        return resultList;
     }
 
     @Test
     public void testFindObjectByName()
     {
-        HibernateEntity zky = findObjectByName("zky");
+        List<HibernateEntity> zky = findObjectByName("zky");
         System.out.println(zky);
     }
+
+
+    /**
+     * 查找所有的用户信息
+     * @return
+     */
+    public static List<HibernateEntity> getAllEntity()
+    {
+        Session session = SessionUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        List list = session.createQuery("from HibernateEntity ").list();
+        transaction.commit();
+        session.close();
+        return list;
+    }
+
+    @Test
+    public void testGetAllEntity()
+    {
+        List<HibernateEntity> allEntity = getAllEntity();
+        System.out.println(allEntity);
+        System.out.println(allEntity.size());
+    }
+
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return
+     */
+    public static HibernateEntity findById(Integer id)
+    {
+        SessionFactory sessionFactory = FactoryUtil.getSessionFactory();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        String hql ="from HibernateEntity h where h.id=:id" ;
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("id",id);
+        List<HibernateEntity> resultList = query.getResultList();
+        entityManager.getTransaction().commit();
+        sessionFactory.close();
+        return resultList.get(0);
+    }
+
+    @Test
+    public void testFinById()
+    {
+        HibernateEntity byId = findById(3);
+        System.out.println(byId);
+
+    }
+
+
+    /**
+     * 根据年龄查询用户信息
+     * @param age
+     * @return
+     */
+    public List<HibernateEntity> findByAge(Integer age)
+    {
+        SessionFactory sessionFactory = FactoryUtil.getSessionFactory();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createQuery(" from HibernateEntity h where h.age > :_age");
+        query.setParameter("_age",String.valueOf(age));
+        List resultList = query.getResultList();
+        entityManager.getTransaction().commit();
+        sessionFactory.close();
+        return resultList;
+    }
+
+    @Test
+    public void testFindByAge()
+    {
+        Domain domain = new Domain();
+        List<HibernateEntity> byAge = domain.findByAge(18);
+        System.out.println("They are adult:"+byAge);
+
+    }
+
+    /**
+     * 用户名模糊查询
+     * @param name
+     * @return
+     */
+    public List<HibernateEntity> findByNameLikeAs(String name)
+    {
+        SessionFactory sessionFactory = FactoryUtil.getSessionFactory();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createQuery("from HibernateEntity h where h.name like :_name order by h.id desc");
+        query.setParameter("_name","%"+name+"%");
+        List resultList = query.getResultList();
+        entityManager.getTransaction().commit();
+        sessionFactory.close();
+        return resultList;
+    }
+
+    @Test
+    public void testFindByNameLikeAs()
+    {
+        Domain domain =  new Domain();
+        List<HibernateEntity> z = domain.findByNameLikeAs("j");
+        System.out.println("模糊查询结果："+z);
+    }
+
+    /**
+     * 用户登陆校验，姓名和密码进行数据库校验，如果跟数据库的用户名和密码一致则返回真，否者返回假。
+     * @param name
+     * @param password
+     * @return
+     */
+    public boolean loginCheck(String name,String password)
+    {
+        SessionFactory sessionFactory = FactoryUtil.getSessionFactory();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createQuery("from HibernateEntity h where h.name=:_name and h.password=:_password");
+        query.setParameter("_name",name);
+        String md5 = MD5Util.getMD5(password);
+        query.setParameter("_password",md5);
+        List resultList = query.getResultList();
+        entityManager.getTransaction().commit();
+        sessionFactory.close();
+        if(resultList.size() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Test
+    public void testLoginCheck()
+    {
+        Domain domain = new Domain();
+        boolean zky1 = domain.loginCheck("zky", "zky");
+        if(zky1)
+        {
+            System.out.println("检测到数据库有该条数据，登陆成功，跳转到首页。");
+        }
+        else
+        {
+            System.out.println("用户名或密码错误，请重试，跳转到登录页");
+        }
+    }
+
 }

@@ -5,8 +5,8 @@ import javax.persistence.*;
 /**
  * Created with IntelliJ IDEA.
  * User: Abbot
- * Date: 2017-09-02
- * Time: 16:58
+ * Date: 2017-09-03
+ * Time: 17:29
  * Description:
  */
 @Entity
@@ -17,6 +17,7 @@ public class HibernateEntity
     private int id;
     private String name;
     private String age;
+    private String password;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -54,6 +55,18 @@ public class HibernateEntity
         this.age = age;
     }
 
+    @Basic
+    @Column(name = "password", nullable = true, length = 50)
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -70,6 +83,8 @@ public class HibernateEntity
             return false;
         if (age != null ? !age.equals(that.age) : that.age != null)
             return false;
+        if (password != null ? !password.equals(that.password) : that.password != null)
+            return false;
 
         return true;
     }
@@ -80,6 +95,7 @@ public class HibernateEntity
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 }

@@ -41,6 +41,5 @@
     <!-- 罗列所有持久化类的类名 -->
     <!-- 指定Hibernate持久化类的类名 -->
     <mapping class="com.tyd.pojo.HibernateEntity"/>
-
   </session-factory>
 </hibernate-configuration>
