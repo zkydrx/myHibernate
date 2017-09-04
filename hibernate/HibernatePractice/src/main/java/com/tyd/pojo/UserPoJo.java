@@ -1,5 +1,7 @@
 package com.tyd.pojo;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Abbot
@@ -7,6 +9,7 @@ package com.tyd.pojo;
  * Time: 19:30
  * Description:
  */
+@Component
 public class UserPoJo
 {
     private int id;

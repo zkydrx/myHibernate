@@ -8,6 +8,7 @@ import com.tyd.util.SessionUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * Time: 20:10
  * Description:
  */
+@Repository
 public class UserDaoImpl implements UserDao
 {
 
@@ -133,12 +135,6 @@ public class UserDaoImpl implements UserDao
         Query query = session.createQuery("from " +
                 "UserEntity u " +
                 "where u.age =:_age ");
-//        query.setParameter(0,"id");
-//        query.setParameter(1,"name");
-//        query.setParameter(2,"password");
-//        query.setParameter(3,"age");
-//        query.setParameter(4,"address");
-//        query.setParameter(5,"sex");
         query.setParameter("_age",age);
         List<UserEntity> list = query.list();
         transaction.commit();

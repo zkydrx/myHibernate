@@ -2,6 +2,7 @@ package com.tyd.util;
 
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * Created with IntelliJ IDEA.

@@ -2,6 +2,7 @@ package com.tyd.service;
 
 import com.tyd.entity.UserEntity;
 import com.tyd.pojo.UserPoJo;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Time: 19:31
  * Description:
  */
+@Repository
 public interface UserService
 {
     /**

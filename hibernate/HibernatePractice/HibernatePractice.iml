@@ -15,9 +15,20 @@
       <configuration>
         <datasource-map>
           <unit-entry name="hibernate.cfg.xml" value="d90a579f-7372-48a2-a921-bf4ce933dc34" />
+          <unit-entry name="sessionFactory" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
+      </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Springmvc" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/springmvc.xml</file>
+        </fileset>
+        <fileset id="fileset2" name="Spring Hibernate" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/spring-hibernate.xml</file>
+        </fileset>
       </configuration>
     </facet>
   </component>

@@ -5,6 +5,7 @@ import com.tyd.dao.impl.UserDaoImpl;
 import com.tyd.entity.UserEntity;
 import com.tyd.pojo.UserPoJo;
 import com.tyd.service.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

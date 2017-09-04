@@ -19,9 +19,8 @@ import java.util.List;
  */
 public class Domain
 {
-
-    UserService userService = new UserServiceImpl();
-    BeanMapper beanMapper = new BeanMapper();
+    private UserService userService = new UserServiceImpl();
+    private BeanMapper beanMapper = new BeanMapper();
     /**
      * 测试添加
      */
@@ -93,6 +92,10 @@ public class Domain
     public void testFindByAge()
     {
         List<UserPoJo> byAge = userService.findByAge("3");
+        for (UserPoJo b : byAge)
+        {
+            System.out.println(b);
+        }
         System.out.println(byAge);
     }
 
@@ -107,5 +110,7 @@ public class Domain
         System.out.println(byId);
 
     }
+
+
 
 }
